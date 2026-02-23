@@ -28,7 +28,7 @@ RUN \
 RUN \
 	sed -i '/^Enabled:/ s/no/yes/' /etc/apt/sources.list.d/*
 	
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -y --update --no-install-recommends \
         winehq-stable=10.0.0.0~trixie-1 \
         wine-stable=10.0.0.0~trixie-1 \
     && apt-mark hold winehq-stable wine-stable \
