@@ -4,11 +4,7 @@ on:
   push:
     branches:
       - "main"
-  workflow_call:
-    inputs:
-      push:
-        required: false
-        type: boolean
+
 env:
     REGISTRY: registry.digitalocean.com
     REPO_NS: zweiund40
@@ -25,7 +21,7 @@ jobs:
       - name: Auth DigitalOcean
         uses: digitalocean/action-doctl@v2
         with:
-            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+            token: ${{ secrets.DIGITALOCEAN_ORG_API_TOKEN }}
 
       - name: Login DOCR
         run: doctl registry login --expiry-seconds 1000
