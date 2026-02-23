@@ -36,6 +36,22 @@ RUN apt-get install -y --update --no-install-recommends \
     && apt-mark hold winehq-stable wine-stable \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+ENV WINEDEBUG=fixme-all
+
+#RUN /bin/sh -c wine --help 
+RUN apt update && apt install -y wget cabextract\
+    && mkdir -p /var/winetricks && cd /var/winetricks \
+    && wget https://raw.githubusercontent.com/Winetricks/winetricks/20260125/src/winetricks \
+    && chmod +x winetricks \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q dotnetdesktop8 
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q corefonts 
+RUN rm -rf /root/.wine/drive_c/windows/Installer/* 
+RUN rm -rf /root/.wine/drive_c/ProgramData/Package\ Cache/* 
+RUN rm -rf /root/.cache/winetricks/dotnetdesktop8/*
+RUN rm -rf /root/.cache/winetricks/corefonts/*
+
 
 ENTRYPOINT ["/tini", "--"]
 CMD ["/bin/bash"]
