@@ -30,7 +30,9 @@ RUN \
 	
 RUN apt-get install -y --update --no-install-recommends \
         winehq-stable=10.0.0.0~trixie-1 \
-        wine-stable=10.0.0.0~trixie-1 \
+		wine-stable=10.0.0.0~trixie-1 \
+		wine-stable-amd64=10.0.0.0~trixie-1 \
+		wine-stable-i386=10.0.0.0~trixie-1 \
     && apt-mark hold winehq-stable wine-stable \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
