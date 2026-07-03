@@ -47,11 +47,23 @@ RUN apt update && apt install -y wget cabextract\
 
 RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q dotnetdesktop9
 RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q corefonts
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks fonts allfonts
 RUN rm -rf /root/.wine/drive_c/windows/Installer/*
 RUN rm -rf /root/.wine/drive_c/ProgramData/Package\ Cache/*
 RUN rm -rf /root/.cache/winetricks/dotnetdesktop9/*
 RUN rm -rf /root/.cache/winetricks/corefonts/*
 
+
+#COPY fonts/calibri* /root/.wine/drive_c/windows/Fonts/
+#
+#RUN xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Calibri (TrueType)" /t REG_SZ /d "calibri.ttf" /f \
+#    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Calibri Bold (TrueType)" /t REG_SZ /d "calibrib.ttf" /f \
+#    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Calibri Italic (TrueType)" /t REG_SZ /d "calibrii.ttf" /f \
+#    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Calibri Bold Italic (TrueType)" /t REG_SZ /d "calibriz.ttf" /f \
+#    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Calibri Light (TrueType)" /t REG_SZ /d "calibril.ttf" /f \
+#    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Calibri Light Italic (TrueType)" /t REG_SZ /d "calibrili.ttf" /f \
+#    && xvfb-run -a wineboot -u
+RUN xvfb-run -a wineboot -u
 
 ENTRYPOINT ["/tini", "--"]
 CMD ["/bin/bash"]
