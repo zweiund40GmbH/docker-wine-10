@@ -77,8 +77,8 @@ RUN xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVers
     && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Verdana (TrueType)" /t REG_SZ /d "verdana.ttf" /f \
     && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Verdana Bold (TrueType)" /t REG_SZ /d "verdanab.ttf" /f \
     && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Verdana Italic (TrueType)" /t REG_SZ /d "verdanai.ttf" /f \
-    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Verdana Bold Italic (TrueType)" /t REG_SZ /d "verdanaz.ttf" /f \
-    && xvfb-run -a wineboot -u
+    && xvfb-run -a wine reg add "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /v "Verdana Bold Italic (TrueType)" /t REG_SZ /d "verdanaz.ttf" /f
+# && xvfb-run -a wineboot -u
 
 ENTRYPOINT ["/tini", "--"]
 CMD ["/bin/bash"]
