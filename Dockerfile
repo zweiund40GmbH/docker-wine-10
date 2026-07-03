@@ -47,10 +47,9 @@ RUN apt update && apt install -y wget cabextract xz-utils \
 
 
 #RUN xvfb-run -a sh -c 'wineboot --init; wineserver -w'
-RUN /var/winetricks/winetricks
-RUN xvfb-run /var/winetricks/winetricks -q dotnetdesktop9
-RUN xvfb-run /var/winetricks/winetricks -q corefonts
-RUN xvfb-run /var/winetricks/winetricks fonts allfonts
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q dotnetdesktop9
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q corefonts
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks fonts allfonts
 RUN rm -rf /root/.wine/drive_c/windows/Installer/*
 RUN rm -rf /root/.wine/drive_c/ProgramData/Package\ Cache/*
 RUN rm -rf /root/.cache/winetricks/dotnetdesktop9/*
