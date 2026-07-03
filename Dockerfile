@@ -45,6 +45,8 @@ RUN apt update && apt install -y wget cabextract xz-utils \
     && chmod +x winetricks \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+
+RUN xvfb-run -a wineboot --init wineserver -w
 RUN xvfb-run /var/winetricks/winetricks -q dotnetdesktop9
 RUN xvfb-run /var/winetricks/winetricks -q corefonts
 RUN xvfb-run /var/winetricks/winetricks fonts allfonts
