@@ -62,35 +62,15 @@ COPY fonts/ /tmp/win-fonts/
 
 RUN mkdir -p "/root/.wine/drive_c/windows/Fonts" \
     && mkdir -p /usr/local/share/fonts/windows \
-    && mkdir -p /data/fonts \
-    && find /tmp/win-fonts -type f \( -iname 'calibri*' -o -iname 'verdana*' \) -print0 \
-        | while IFS= read -r -d '' font; do \
-            filename="$(basename "$font" | tr '[:upper:]' '[:lower:]')"; \
-            cp "$font" "/root/.wine/drive_c/windows/Fonts/$filename"; \
-            cp "$font" "/usr/local/share/fonts/windows/$filename"; \
-            cp "$font" "/data/fonts/$filename"; \
-        done \
+    && mkdir -p /data/fonts
+
+RUN cp /tmp/win-fonts/* /usr/local/share/fonts/windows \
+    && cp /tmp/win-fonts/* /data/fonts \
+    && cp /tmp/win-fonts/* /root/.wine/drive_c/windows/Fonts \
     && fc-cache -f -v
 
-RUN cat > /tmp/fonts.reg <<'EOF'
-    Windows Registry Editor Version 5.00
-
-    [HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Fonts]
-    "Calibri (TrueType)"="calibri.ttf"
-    "Calibri Bold (TrueType)"="calibrib.ttf"
-    "Calibri Italic (TrueType)"="calibrii.ttf"
-    "Calibri Bold Italic (TrueType)"="calibriz.ttf"
-    "Calibri Light (TrueType)"="calibril.ttf"
-    "Calibri Light Italic (TrueType)"="calibrili.ttf"
-    "Verdana (TrueType)"="verdana.ttf"
-    "Verdana Bold (TrueType)"="verdanab.ttf"
-    "Verdana Italic (TrueType)"="verdanai.ttf"
-    "Verdana Bold Italic (TrueType)"="verdanaz.ttf"
-EOF
-
-RUN wine reg import /tmp/fonts.reg \
-    && wine reg query "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" | grep -Ei 'calibri|verdana'
-
+#RUN wine reg import /tmp/fonts.reg \
+#    && wine reg query "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" | grep -Ei 'calibri|verdana'
 
 ENTRYPOINT ["/tini", "--"]
 CMD ["/bin/bash"]
