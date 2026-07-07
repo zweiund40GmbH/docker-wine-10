@@ -48,10 +48,12 @@ RUN apt update && apt install -y wget cabextract xz-utils \
 
 RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q dotnetdesktop9
 RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q corefonts
+RUN /var/winetricks/winetricks && xvfb-run /var/winetricks/winetricks -q gdiplus
 RUN rm -rf /root/.wine/drive_c/windows/Installer/*
 RUN rm -rf /root/.wine/drive_c/ProgramData/Package\ Cache/*
 RUN rm -rf /root/.cache/winetricks/dotnetdesktop9/*
 RUN rm -rf /root/.cache/winetricks/corefonts/*
+RUN rm -rf /root/.cache/winetricks/gdiplus/*
 
 
 COPY fonts/ /tmp/win-fonts/
